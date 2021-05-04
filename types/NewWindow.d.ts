@@ -48,6 +48,11 @@ declare module 'react-new-window' {
     onBlock?: EventHandler | null
 
     /**
+     * A function to be triggered when the new window blurs.
+     */
+    onBlur?: OpenEventHandler | null
+
+    /**
      * A function to be triggered when the new window could not be opened.
      */
     onUnload?: EventHandler | null

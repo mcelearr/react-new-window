@@ -23,6 +23,7 @@ class NewWindow extends React.PureComponent {
     features: { width: '600px', height: '640px' },
     onBlock: null,
     onOpen: null,
+    onBlur: null,
     onUnload: null,
     center: 'parent',
     copyStyles: true
@@ -60,7 +61,16 @@ class NewWindow extends React.PureComponent {
    * Create the new window when NewWindow component mount.
    */
   openChild() {
-    const { url, title, name, features, onBlock, onOpen, center } = this.props
+    const {
+      url,
+      title,
+      name,
+      features,
+      onBlock,
+      onOpen,
+      onBlur,
+      center
+    } = this.props
 
     // Prepare position of the new window to be centered against the 'parent' window or 'screen'.
     if (
@@ -122,6 +132,8 @@ class NewWindow extends React.PureComponent {
         onOpen(this.window)
       }
 
+      this.window.addEventListener('blur', () => onBlur(this.window))
+
       // Release anything bound to this component before the new window unload.
       this.window.addEventListener('beforeunload', () => this.release())
     } else {
@@ -174,6 +186,7 @@ NewWindow.propTypes = {
   onUnload: PropTypes.func,
   onBlock: PropTypes.func,
   onOpen: PropTypes.func,
+  onBlur: PropTypes.func,
   center: PropTypes.oneOf(['parent', 'screen']),
   copyStyles: PropTypes.bool
 }
